@@ -31,7 +31,7 @@ public class Menu extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         logoutBtn = findViewById(R.id.logout);
-        textView = findViewById(R.id.temp);
+        textView = findViewById(R.id.choiceText);
         user = auth.getCurrentUser();
         dogBtn = findViewById(R.id.btn_dog);
         movieBtn = findViewById(R.id.btn_movie);
@@ -57,11 +57,32 @@ public class Menu extends AppCompatActivity {
             }
         });
 
+        dogBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chooseActivity("dog");
+            }
+        });
+
+        movieBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chooseActivity("movie");
+            }
+        });
+
+        gameBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chooseActivity("game");
+            }
+        });
+
     }
 
     private void chooseActivity(String activity){
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        intent.putExtra("activity", activity);
+        intent.putExtra("choice", activity);
         startActivity(intent);
     }
 }
