@@ -33,7 +33,7 @@ public class Register extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
             Toast.makeText(getApplicationContext(), "Welcome back", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            Intent intent = new Intent(getApplicationContext(), Menu.class);
             startActivity(intent);
             finish();
         }

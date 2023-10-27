@@ -7,4 +7,8 @@
     <string name="click_to_login">Click to login</string>
     <string name="click_to_register">Click to register</string>
     <string name="logout">Logout</string>
+    <string name="dogs">Dogs</string>
+    <string name="dog">Dog</string>
+    <string name="movie">Movie</string>
+    <string name="game">Game</string>
 </resources>
