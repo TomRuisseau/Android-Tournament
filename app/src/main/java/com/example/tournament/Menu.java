@@ -60,21 +60,21 @@ public class Menu extends AppCompatActivity {
         dogBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                chooseActivity("dog");
+                chooseActivity("Dog");
             }
         });
 
         movieBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                chooseActivity("movie");
+                chooseActivity("Movie");
             }
         });
 
         gameBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                chooseActivity("game");
+                chooseActivity("Game");
             }
         });
 
