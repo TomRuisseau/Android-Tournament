@@ -56,13 +56,15 @@ public class MainActivity extends AppCompatActivity {
             try {
                 String apiKey = "1c8158864e824bf181081be6d97b1504";
                 int totalItems = 64;
-                int pageSize = 40;
-                int totalPages = (int) Math.ceil((double) totalItems / pageSize);
+                int maxPageSize = 40;
+                int totalPages = (int) Math.ceil((double) totalItems / maxPageSize);
 
                 List<String> games = new ArrayList<>();
 
                 for (int page = 1; page <= totalPages; page++) {
-                    String apiUrl = "https://api.rawg.io/api/games?ordering=popular&page=" + page + "&page_size=" + pageSize + "&key=" + apiKey;
+                    int itemsNeeded = Math.min(totalItems - games.size(), maxPageSize); // Don't request more items than we need to
+                    String apiUrl = "https://api.rawg.io/api/games?ordering=popular&page=" + page + "&page_size=" + itemsNeeded + "&key=" + apiKey;
+                    System.out.println(apiUrl);
 
                     URL url = new URL(apiUrl);
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
