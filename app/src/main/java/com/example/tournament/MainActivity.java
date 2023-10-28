@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -12,10 +13,16 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     TextView choiceText;
@@ -43,29 +50,46 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private class FetchGamesTask extends AsyncTask<Void, Void, String> {
+    private class FetchGamesTask extends AsyncTask<Void, Void, List<String>> {
         @Override
-        protected String doInBackground(Void... params) {
+        protected List<String> doInBackground(Void... params) {
             try {
                 String apiKey = "1c8158864e824bf181081be6d97b1504";
-                int pageSize = 64;  // The number of popular games you want to retrieve
-                String apiUrl = "https://api.rawg.io/api/games?ordering=popular&page_size=" + pageSize + "&key=" + apiKey;
+                int totalItems = 64;
+                int pageSize = 40;
+                int totalPages = (int) Math.ceil((double) totalItems / pageSize);
 
-                URL url = new URL(apiUrl);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("GET");
+                List<String> games = new ArrayList<>();
 
-                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                String line;
-                StringBuilder response = new StringBuilder();
+                for (int page = 1; page <= totalPages; page++) {
+                    String apiUrl = "https://api.rawg.io/api/games?ordering=popular&page=" + page + "&page_size=" + pageSize + "&key=" + apiKey;
 
-                while ((line = reader.readLine()) != null) {
-                    response.append(line);
+                    URL url = new URL(apiUrl);
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setRequestMethod("GET");
+
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    String line;
+                    StringBuilder response = new StringBuilder();
+
+                    while ((line = reader.readLine()) != null) {
+                        response.append(line);
+                    }
+                    reader.close();
+
+                    // Parse the JSON data and extract the names of the games for this page
+                    JSONObject jsonResponse = new JSONObject(response.toString());
+                    JSONArray resultsArray = jsonResponse.getJSONArray("results");
+
+                    for (int i = 0; i < resultsArray.length(); i++) {
+                        JSONObject gameObject = resultsArray.getJSONObject(i);
+                        String gameName = gameObject.getString("name");
+                        String background_image = gameObject.getString("background_image");
+                        games.add("Game Name: " + gameName + "\nBackground Image: " + background_image);
+                    }
                 }
-                reader.close();
 
-                // Now, 'response.toString()' contains the JSON data with the top 64 popular games.
-                return response.toString();
+                return games;
             } catch (Exception e) {
                 e.printStackTrace();
                 return null;
@@ -73,11 +97,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            if (result != null) {
-                // Handle the result here, such as updating UI elements with the retrieved data.
-                System.out.println(result);
+        protected void onPostExecute(List<String> results) {
+            super.onPostExecute(results);
+            if (results != null) {
+                Log.d("RESULTS", results.size() + " results downloaded");
+                for (String result : results) {
+                    System.out.println(result);
+                }
             } else {
                 // Handle the case where the request failed.
             }
