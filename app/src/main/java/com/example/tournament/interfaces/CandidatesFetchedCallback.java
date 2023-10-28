@@ -4,6 +4,6 @@ import com.example.tournament.dataClasses.Candidate;
 
 import java.util.List;
 
-public interface GamesFetchedCallback {
-    void onGamesFetched(List<Candidate> games);
+public interface CandidatesFetchedCallback {
+    void onCandidatesFetched(List<Candidate> candidates);
 }

@@ -4,7 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.example.tournament.dataClasses.Candidate;
-import com.example.tournament.interfaces.GamesFetchedCallback;
+import com.example.tournament.interfaces.CandidatesFetchedCallback;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -28,7 +28,7 @@ public class RetrieveGamesExecutor {
     }
 
 
-    public  void getGames(GamesFetchedCallback callback){
+    public  void getGames(CandidatesFetchedCallback callback){
         mExecutorService.execute(() -> {
             try {
                 String apiKey = "1c8158864e824bf181081be6d97b1504";
@@ -63,12 +63,16 @@ public class RetrieveGamesExecutor {
                 }
 
                 handler.post(() -> {
-                    callback.onGamesFetched(games);
+                    callback.onCandidatesFetched(games);
                 });
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
+    }
+
+    public void shutdown() {
+        mExecutorService.shutdown();
     }
 }
