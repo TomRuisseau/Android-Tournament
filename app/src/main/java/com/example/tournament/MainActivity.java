@@ -38,8 +38,6 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
                 break;
             case "Game":
                 retrieveGamesExecutor.getGames(this::onCandidatesFetched);
-
-//                new FetchGamesTask().execute();
                 break;
         }
     }
