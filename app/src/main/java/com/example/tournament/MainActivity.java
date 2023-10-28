@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.tournament.dataClasses.Candidate;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -27,6 +28,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     TextView choiceText;
     String choice;
+
+    List <Candidate> candidates = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,14 +53,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private class FetchGamesTask extends AsyncTask<Void, Void, List<String>> {
+    private class FetchGamesTask extends AsyncTask<Void, Void, List<Candidate>> {
         @Override
-        protected List<String> doInBackground(Void... params) {
+        protected List<Candidate> doInBackground(Void... params) {
             try {
                 String apiKey = "1c8158864e824bf181081be6d97b1504";
                 int totalItems = 32;
 
-                List<String> games = new ArrayList<>();
+                List<Candidate> games = new ArrayList<>();
 
                 String apiUrl = "https://api.rawg.io/api/games?ordering=popular&page=1&page_size=" + totalItems + "&key=" + apiKey;
                 URL url = new URL(apiUrl);
@@ -81,7 +84,8 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject gameObject = resultsArray.getJSONObject(i);
                     String gameName = gameObject.getString("name");
                     String background_image = gameObject.getString("background_image");
-                    games.add("Game Name: " + gameName + "\nBackground Image: " + background_image);
+                    Candidate game = new Candidate(gameName, background_image);
+                    games.add(game);
                 }
 
                 return games;
@@ -92,16 +96,17 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(List<String> results) {
+        protected void onPostExecute(List<Candidate> results) {
             super.onPostExecute(results);
             if (results != null) {
                 Log.d("RESULTS", results.size() + " results downloaded");
-                for (String result : results) {
-                    System.out.println(result);
+                candidates = results;
+                for (Candidate candidate : candidates) {
+                    Log.d("RESULTS", candidate.getName() + " " + candidate.getImageUrl());
                 }
-            } else {
-                // Handle the case where the request failed.
             }
+            // TODO : Handle the case where the request failed.
+
         }
     }
 }
