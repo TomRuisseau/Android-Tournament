@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.tournament.dataClasses.Candidate;
 import com.example.tournament.executors.RetrieveGamesExecutor;
 import com.example.tournament.interfaces.CandidatesFetchedCallback;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,9 +77,21 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
         textViewTop.setVisibility(TextView.VISIBLE);
         textViewBottom.setVisibility(TextView.VISIBLE);
 
-        
+
         textViewTop.setText(candidates.get(0).getName());
-        textViewBottom.setText(candidates.get(1).getName());
+        textViewBottom.setText(candidates.get(7).getName());
+
+        Picasso.get()
+                .load(candidates.get(0).getImageUrl())
+                .resize(1920, 1080)
+                .centerCrop()
+                .into(imageViewTop);
+
+        Picasso.get()
+                .load(candidates.get(7).getImageUrl())
+                .resize(1920, 1080)
+                .centerCrop()
+                .into(imageViewBottom);
     }
 }
 
