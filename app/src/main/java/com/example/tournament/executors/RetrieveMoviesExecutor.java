@@ -36,7 +36,7 @@ public class RetrieveMoviesExecutor {
 
                 List<Candidate> movies = new ArrayList<>();
 
-                String apiUrl = "https://api.themoviedb.org/3/movie/popular?api_key=" + apiKey + "&language=en-US&page=1&page_size=" + totalItems;
+                String apiUrl = "https://api.themoviedb.org/3/movie/top_rated?api_key=" + apiKey + "&language=en-US&page=1&page_size=" + totalItems;
                 URL url = new URL(apiUrl);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
