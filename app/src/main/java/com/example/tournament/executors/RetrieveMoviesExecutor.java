@@ -33,34 +33,44 @@ public class RetrieveMoviesExecutor {
             try {
                 String apiKey = "aaa5b44cb7ae1451b0040edd47bf5c69";
                 int totalItems = 32;
+                int itemsPerPage = 20;
 
                 List<Candidate> movies = new ArrayList<>();
 
-                String apiUrl = "https://api.themoviedb.org/3/movie/top_rated?api_key=" + apiKey + "&language=en-US&page=1&page_size=" + totalItems;
-                URL url = new URL(apiUrl);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("GET");
+                int totalPages = (int) Math.ceil((double) totalItems / itemsPerPage);
 
-                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                String line;
-                StringBuilder response = new StringBuilder();
+                for (int page = 1; page <= totalPages; page++) {
+                    String apiUrl = "https://api.themoviedb.org/3/movie/top_rated?api_key=" + apiKey + "&language=en-US&page=" + page;
+                    URL url = new URL(apiUrl);
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setRequestMethod("GET");
 
-                while ((line = reader.readLine()) != null) {
-                    response.append(line);
-                }
-                reader.close();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    String line;
+                    StringBuilder response = new StringBuilder();
 
-                // Parse the JSON data and extract the names of the movies for this page
-                JSONObject jsonResponse = new JSONObject(response.toString());
-                JSONArray resultsArray = jsonResponse.getJSONArray("results");
+                    while ((line = reader.readLine()) != null) {
+                        response.append(line);
+                    }
+                    reader.close();
 
-                for (int i = 0; i < resultsArray.length(); i++) {
-                    JSONObject movieObject = resultsArray.getJSONObject(i);
-                    String movieName = movieObject.getString("title");
-                    String poster_path = movieObject.getString("poster_path");
-                    poster_path = "https://image.tmdb.org/t/p/original" + poster_path;
-                    Candidate movie = new Candidate(movieName, poster_path);
-                    movies.add(movie);
+                    // Parse the JSON data and extract the names of the movies for this page
+                    JSONObject jsonResponse = new JSONObject(response.toString());
+                    JSONArray resultsArray = jsonResponse.getJSONArray("results");
+
+                    for (int i = 0; i < resultsArray.length(); i++) {
+                        JSONObject movieObject = resultsArray.getJSONObject(i);
+                        String movieName = movieObject.getString("title");
+                        String poster_path = movieObject.getString("poster_path");
+                        poster_path = "https://image.tmdb.org/t/p/original" + poster_path;
+                        Candidate movie = new Candidate(movieName, poster_path);
+                        movies.add(movie);
+
+                        // Check if we have collected enough items
+                        if (movies.size() >= totalItems) {
+                            break;
+                        }
+                    }
                 }
 
                 handler.post(() -> {
@@ -72,6 +82,7 @@ public class RetrieveMoviesExecutor {
             }
         });
     }
+
 
 
     public void shutdown() {
