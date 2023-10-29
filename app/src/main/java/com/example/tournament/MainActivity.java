@@ -2,9 +2,11 @@ package com.example.tournament;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
     TextView choiceText;
     ProgressBar progressBar;
 
+    Button buttonChoices;
     ImageView imageViewTop, imageViewBottom;
 
     TextView textViewTop, textViewBottom;
@@ -44,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Initialize variables
         progressBar = findViewById(R.id.progressBarCandidates);
         imageViewTop = findViewById(R.id.imageViewTop);
         imageViewBottom = findViewById(R.id.imageViewBottom);
@@ -61,6 +65,10 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
         imageViewBottom.setOnClickListener(this::ClickCandidate);
         imageViewTop.setOnClickListener(this::ClickCandidate);
 
+        buttonChoices = findViewById(R.id.buttonChoices);
+        buttonChoices.setOnClickListener(view -> {
+            GoToMenu();
+        });
 
         choiceText = findViewById(R.id.choiceText);
         Bundle extras = getIntent().getExtras();
@@ -112,6 +120,16 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
         String text = getString(R.string.round_of) + candidates.size();
         textViewRound.setText(text);
         currentId = -1; //because we increment it at the beginning of NextDuel()
+
+        if (candidates.size() == 1) {
+            textViewTop.setText(candidates.get(0).getName());
+            insertImage(position.TOP, candidates.get(0).getImageUrl());
+            String favorite = "Your favorite " + choice + " is :";
+            textViewRound.setText(favorite);
+            textViewBottom.setVisibility(TextView.INVISIBLE);
+            imageViewBottom.setVisibility(ImageView.INVISIBLE);
+            return;
+        }
         NextDuel();
     }
 
@@ -160,6 +178,12 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
                 break;
 
         }
+    }
+
+    private void GoToMenu() {
+        Intent intent = new Intent(getApplicationContext(), Menu.class);
+        startActivity(intent);
+        finish();
     }
 }
 
