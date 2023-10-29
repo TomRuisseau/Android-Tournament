@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -19,6 +20,10 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
     TextView choiceText;
     ProgressBar progressBar;
 
+    ImageView imageViewTop, imageViewBottom;
+
+    TextView textViewTop, textViewBottom;
+
     RetrieveGamesExecutor retrieveGamesExecutor = new RetrieveGamesExecutor();
     List <Candidate> candidates = new ArrayList<>();
 
@@ -28,6 +33,15 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
         setContentView(R.layout.activity_main);
 
         progressBar = findViewById(R.id.progressBarCandidates);
+        imageViewTop = findViewById(R.id.imageViewTop);
+        imageViewBottom = findViewById(R.id.imageViewBottom);
+        textViewTop = findViewById(R.id.textViewTop);
+        textViewBottom = findViewById(R.id.textViewBottom);
+
+        imageViewTop.setVisibility(ImageView.INVISIBLE);
+        imageViewBottom.setVisibility(ImageView.INVISIBLE);
+        textViewTop.setVisibility(TextView.INVISIBLE);
+        textViewBottom.setVisibility(TextView.INVISIBLE);
 
         choiceText = findViewById(R.id.choiceText);
         Bundle extras = getIntent().getExtras();
@@ -53,6 +67,18 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
         }
         retrieveGamesExecutor.shutdown();
         progressBar.setVisibility(ProgressBar.INVISIBLE);
+        startTournament();
     }
 
+    private void startTournament() {
+        imageViewTop.setVisibility(ImageView.VISIBLE);
+        imageViewBottom.setVisibility(ImageView.VISIBLE);
+        textViewTop.setVisibility(TextView.VISIBLE);
+        textViewBottom.setVisibility(TextView.VISIBLE);
+
+        
+        textViewTop.setText(candidates.get(0).getName());
+        textViewBottom.setText(candidates.get(1).getName());
+    }
 }
+
