@@ -127,12 +127,7 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
         currentId = -1; //because we increment it at the beginning of NextDuel()
 
         if (candidates.size() == 1) {
-            textViewTop.setText(candidates.get(0).getName());
-            insertImage(position.TOP, candidates.get(0).getImageUrl());
-            String favorite = "Your favorite " + choice + " is :";
-            textViewRound.setText(favorite);
-            textViewBottom.setVisibility(TextView.INVISIBLE);
-            imageViewBottom.setVisibility(ImageView.INVISIBLE);
+            declareWinner();
             return;
         }
         NextDuel();
@@ -183,6 +178,17 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
                 break;
 
         }
+    }
+
+    private void declareWinner() {
+        imageViewTop.setOnClickListener(null); //disable click listeners
+
+        textViewTop.setText(candidates.get(0).getName());
+        insertImage(position.TOP, candidates.get(0).getImageUrl());
+        String favorite = "Your favorite " + choice + " is";
+        textViewRound.setText(favorite);
+        textViewBottom.setVisibility(TextView.INVISIBLE);
+        imageViewBottom.setVisibility(ImageView.INVISIBLE);
     }
 
     private void GoToMenu() {
