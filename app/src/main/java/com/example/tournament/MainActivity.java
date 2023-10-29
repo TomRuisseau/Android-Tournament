@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -25,6 +26,8 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
 
     TextView textViewTop, textViewBottom;
 
+    TextView textViewRound;
+
     enum position {
         TOP,
         BOTTOM
@@ -32,6 +35,9 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
 
     RetrieveGamesExecutor retrieveGamesExecutor = new RetrieveGamesExecutor();
     List <Candidate> candidates = new ArrayList<>();
+    List <Candidate> nextCandidates = new ArrayList<>();
+
+    int currentId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +49,18 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
         imageViewBottom = findViewById(R.id.imageViewBottom);
         textViewTop = findViewById(R.id.textViewTop);
         textViewBottom = findViewById(R.id.textViewBottom);
+        textViewRound = findViewById(R.id.textViewRound);
 
+        //TODO: make these invisible from xml not here
         imageViewTop.setVisibility(ImageView.INVISIBLE);
         imageViewBottom.setVisibility(ImageView.INVISIBLE);
         textViewTop.setVisibility(TextView.INVISIBLE);
         textViewBottom.setVisibility(TextView.INVISIBLE);
+        textViewRound.setVisibility(TextView.INVISIBLE);
+
+        imageViewBottom.setOnClickListener(this::ClickCandidate);
+        imageViewTop.setOnClickListener(this::ClickCandidate);
+
 
         choiceText = findViewById(R.id.choiceText);
         Bundle extras = getIntent().getExtras();
@@ -81,13 +94,52 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
         imageViewBottom.setVisibility(ImageView.VISIBLE);
         textViewTop.setVisibility(TextView.VISIBLE);
         textViewBottom.setVisibility(TextView.VISIBLE);
+        textViewRound.setVisibility(TextView.VISIBLE);
 
+        nextCandidates.addAll(candidates);
+        NextRound();
+//        textViewTop.setText(candidates.get(0).getName());
+//        textViewBottom.setText(candidates.get(1).getName());
+//
+//        insertImage(position.TOP, candidates.get(0).getImageUrl());
+//        insertImage(position.BOTTOM, candidates.get(1).getImageUrl());
+    }
 
-        textViewTop.setText(candidates.get(0).getName());
-        textViewBottom.setText(candidates.get(1).getName());
+    private void NextRound() {
+        candidates.clear();
+        candidates.addAll(nextCandidates);
+        nextCandidates.clear();
+        String text = getString(R.string.round_of) + candidates.size();
+        textViewRound.setText(text);
+        currentId = -1; //because we increment it at the beginning of NextDuel()
+        NextDuel();
+    }
 
-        insertImage(position.TOP, candidates.get(0).getImageUrl());
-        insertImage(position.BOTTOM, candidates.get(1).getImageUrl());
+    private void NextDuel(){
+        int candidateCount = candidates.size();
+
+        currentId++;
+        if (currentId >= candidateCount / 2) { //if we reached the end of the list
+            NextRound();
+            return;
+        }
+        //get next candidates in the list
+        textViewTop.setText(candidates.get(currentId).getName());
+        insertImage(position.TOP, candidates.get(currentId).getImageUrl());
+
+        //get the symmetrical candidate from the end of the list
+        textViewBottom.setText(candidates.get(candidateCount - 1 - currentId).getName());
+        insertImage(position.BOTTOM, candidates.get(candidateCount - 1 - currentId).getImageUrl());
+    }
+
+    private void ClickCandidate(View view) {
+        if (view.getId() == R.id.imageViewTop){
+            nextCandidates.add(candidates.get(currentId));
+        }
+        else{
+            nextCandidates.add(candidates.get(candidates.size() - 1 - currentId));
+        }
+        NextDuel();
     }
 
     private void insertImage(position pos, String url) {
