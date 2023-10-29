@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.tournament.dataClasses.Candidate;
@@ -14,8 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements CandidatesFetchedCallback {
-    TextView choiceText;
     String choice;
+    TextView choiceText;
+    ProgressBar progressBar;
 
     RetrieveGamesExecutor retrieveGamesExecutor = new RetrieveGamesExecutor();
     List <Candidate> candidates = new ArrayList<>();
@@ -24,6 +26,8 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        progressBar = findViewById(R.id.progressBarCandidates);
 
         choiceText = findViewById(R.id.choiceText);
         Bundle extras = getIntent().getExtras();
@@ -43,10 +47,12 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
     }
     @Override
     public void onCandidatesFetched(List<Candidate> candidates) {
-        for (Candidate candidate : candidates) {
+        this.candidates = candidates;
+        for (Candidate candidate : this.candidates) {
             Log.d("RESULTS", candidate.getName() + " " + candidate.getImageUrl());
         }
         retrieveGamesExecutor.shutdown();
+        progressBar.setVisibility(ProgressBar.INVISIBLE);
     }
 
 }
