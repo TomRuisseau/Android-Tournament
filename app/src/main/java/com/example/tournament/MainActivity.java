@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.tournament.dataClasses.Candidate;
 import com.example.tournament.executors.RetrieveGamesExecutor;
+import com.example.tournament.executors.RetrieveMoviesExecutor;
 import com.example.tournament.interfaces.CandidatesFetchedCallback;
 import com.squareup.picasso.Picasso;
 
@@ -37,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
     }
 
     RetrieveGamesExecutor retrieveGamesExecutor = new RetrieveGamesExecutor();
+    RetrieveMoviesExecutor retrieveMoviesExecutor = new RetrieveMoviesExecutor();
+
     List <Candidate> candidates = new ArrayList<>();
     List <Candidate> nextCandidates = new ArrayList<>();
 
@@ -80,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
             case "Dog":
                 break;
             case "Movie":
+                retrieveMoviesExecutor.getMovies(this::onCandidatesFetched);
                 break;
             case "Game":
                 retrieveGamesExecutor.getGames(this::onCandidatesFetched);
@@ -93,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
             Log.d("RESULTS", candidate.getName() + " " + candidate.getImageUrl());
         }
         retrieveGamesExecutor.shutdown();
+        retrieveMoviesExecutor.shutdown();
         progressBar.setVisibility(ProgressBar.INVISIBLE);
         startTournament();
     }
