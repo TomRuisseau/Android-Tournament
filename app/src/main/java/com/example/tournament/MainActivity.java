@@ -25,6 +25,11 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
 
     TextView textViewTop, textViewBottom;
 
+    enum position {
+        TOP,
+        BOTTOM
+    }
+
     RetrieveGamesExecutor retrieveGamesExecutor = new RetrieveGamesExecutor();
     List <Candidate> candidates = new ArrayList<>();
 
@@ -79,19 +84,30 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
 
 
         textViewTop.setText(candidates.get(0).getName());
-        textViewBottom.setText(candidates.get(7).getName());
+        textViewBottom.setText(candidates.get(1).getName());
 
-        Picasso.get()
-                .load(candidates.get(0).getImageUrl())
-                .resize(1920, 1080)
-                .centerCrop()
-                .into(imageViewTop);
+        insertImage(position.TOP, candidates.get(0).getImageUrl());
+        insertImage(position.BOTTOM, candidates.get(1).getImageUrl());
+    }
 
-        Picasso.get()
-                .load(candidates.get(7).getImageUrl())
-                .resize(1920, 1080)
-                .centerCrop()
-                .into(imageViewBottom);
+    private void insertImage(position pos, String url) {
+        switch (choice){
+            case "Movie":
+                Picasso.get()
+                        .load(url)
+                        .resize(2000, 3000)
+                        .centerCrop()
+                        .into(pos == position.TOP ? imageViewTop : imageViewBottom);
+                break;
+            case "Game":
+                Picasso.get()
+                        .load(url)
+                        .resize(1920, 1080)
+                        .centerCrop()
+                        .into(pos == position.TOP ? imageViewTop : imageViewBottom);
+                break;
+
+        }
     }
 }
 
