@@ -12,4 +12,5 @@
     <string name="movie">Movie</string>
     <string name="game">Game</string>
     <string name="round_of">"Round of "</string>
+    <string name="tv_shows">TV shows</string>
 </resources>

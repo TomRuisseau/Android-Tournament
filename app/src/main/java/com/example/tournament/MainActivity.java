@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.tournament.dataClasses.Candidate;
 import com.example.tournament.executors.RetrieveGamesExecutor;
 import com.example.tournament.executors.RetrieveMoviesExecutor;
+import com.example.tournament.executors.RetrieveShowsExecutor;
 import com.example.tournament.interfaces.CandidatesFetchedCallback;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -44,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
 
     RetrieveGamesExecutor retrieveGamesExecutor = new RetrieveGamesExecutor();
     RetrieveMoviesExecutor retrieveMoviesExecutor = new RetrieveMoviesExecutor();
+
+    RetrieveShowsExecutor retrieveShowsExecutor = new RetrieveShowsExecutor();
 
     List <Candidate> candidates = new ArrayList<>();
     List <Candidate> nextCandidates = new ArrayList<>();
@@ -89,7 +92,8 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
         }
         choiceText.setText(choice);
         switch (choice) {
-            case "Dog":
+            case "TV Show":
+                retrieveShowsExecutor.getShows(this::onCandidatesFetched);
                 break;
             case "Movie":
                 retrieveMoviesExecutor.getMovies(this::onCandidatesFetched);
@@ -107,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
         }
         retrieveGamesExecutor.shutdown();
         retrieveMoviesExecutor.shutdown();
+        retrieveShowsExecutor.shutdown();
         progressBar.setVisibility(ProgressBar.INVISIBLE);
         startTournament();
     }
@@ -167,12 +172,14 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
     private void insertImage(position pos, String url) {
         switch (choice){
             case "Movie":
+            case "TV Show":
                 Picasso.get()
                         .load(url)
                         .resize(2000, 3000)
                         .centerCrop()
                         .into(pos == position.TOP ? imageViewTop : imageViewBottom);
                 break;
+
             case "Game":
                 Picasso.get()
                         .load(url)
@@ -186,9 +193,9 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
 
     private void declareWinner() {
         imageViewTop.setOnClickListener(null); //disable click listeners
-
-        textViewTop.setText(candidates.get(0).getName());
-        insertImage(position.TOP, candidates.get(0).getImageUrl());
+        Candidate winner = candidates.get(0);
+        textViewTop.setText(winner.getName());
+        insertImage(position.TOP, winner.getImageUrl());
         String favorite = "Your favorite " + choice + " is";
         textViewRound.setText(favorite);
         textViewBottom.setVisibility(TextView.INVISIBLE);
@@ -199,8 +206,8 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
         FirebaseUser currentUser = mAuth.getCurrentUser();
         // Store winners info
         Map<String, Object> userData = new HashMap<>();
-        userData.put(choice + "_name", candidates.get(0).getName());
-        userData.put(choice + "_image", candidates.get(0).getImageUrl());
+        userData.put(choice + "_name", winner.getName());
+        userData.put(choice + "_image", winner.getImageUrl());
 
         assert currentUser != null;
         String userId = currentUser.getUid();
@@ -216,6 +223,18 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
                         db.collection("users").document(userId).set(userData);
                     }
                 });
+
+        //TODO : create states for each candidate and save them in the database
+//        db.collection(choice).document(winner.getName()).get()
+//                .addOnCompleteListener(task -> {
+//                    if (task.isSuccessful() && task.getResult().exists()) {
+//                        // Document exists, update specific fields
+//                        db.collection(choice).document(winner.getName()).update(winnerData);
+//                    } else {
+//                        // Document does not exist, create a new document
+//                        db.collection(choice).document(winner.getName()).set(winnerData);
+//                    }
+//                });
     }
 
     private void GoToMenu() {

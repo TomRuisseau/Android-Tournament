@@ -18,7 +18,7 @@ public class Menu extends AppCompatActivity {
     TextView textView;
     FirebaseUser user;
 
-    Button dogBtn;
+    Button showBtn;
     Button movieBtn;
     Button gameBtn;
 
@@ -33,7 +33,7 @@ public class Menu extends AppCompatActivity {
         logoutBtn = findViewById(R.id.logout);
         textView = findViewById(R.id.choiceText);
         user = auth.getCurrentUser();
-        dogBtn = findViewById(R.id.btn_dog);
+        showBtn = findViewById(R.id.btn_show);
         movieBtn = findViewById(R.id.btn_movie);
         gameBtn = findViewById(R.id.btn_game);
 
@@ -57,10 +57,10 @@ public class Menu extends AppCompatActivity {
             }
         });
 
-        dogBtn.setOnClickListener(new View.OnClickListener() {
+        showBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                chooseActivity("Dog");
+                chooseActivity("TV Show");
             }
         });
 
