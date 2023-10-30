@@ -15,10 +15,15 @@ import com.example.tournament.dataClasses.Candidate;
 import com.example.tournament.executors.RetrieveGamesExecutor;
 import com.example.tournament.executors.RetrieveMoviesExecutor;
 import com.example.tournament.interfaces.CandidatesFetchedCallback;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements CandidatesFetchedCallback {
     String choice;
@@ -43,6 +48,9 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
     List <Candidate> candidates = new ArrayList<>();
     List <Candidate> nextCandidates = new ArrayList<>();
 
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseAuth mAuth;
+
     int currentId = 0;
 
     @Override
@@ -57,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
         textViewTop = findViewById(R.id.textViewTop);
         textViewBottom = findViewById(R.id.textViewBottom);
         textViewRound = findViewById(R.id.textViewRound);
+        mAuth = FirebaseAuth.getInstance();
 
         //TODO: make these invisible from xml not here
         imageViewTop.setVisibility(ImageView.INVISIBLE);
@@ -111,11 +120,6 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
 
         nextCandidates.addAll(candidates);
         NextRound();
-//        textViewTop.setText(candidates.get(0).getName());
-//        textViewBottom.setText(candidates.get(1).getName());
-//
-//        insertImage(position.TOP, candidates.get(0).getImageUrl());
-//        insertImage(position.BOTTOM, candidates.get(1).getImageUrl());
     }
 
     private void NextRound() {
@@ -189,6 +193,17 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
         textViewRound.setText(favorite);
         textViewBottom.setVisibility(TextView.INVISIBLE);
         imageViewBottom.setVisibility(ImageView.INVISIBLE);
+
+
+        //add to database
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        // Create a new user with a first and last name
+        Map<String, Object> userData = new HashMap<>();
+        userData.put(choice + "_name", candidates.get(0).getName());
+        userData.put(choice + "_image", candidates.get(0).getImageUrl());
+
+        // Add a new document with a generated ID
+        db.collection("users").document(currentUser.getUid()).update(userData);
     }
 
     private void GoToMenu() {
