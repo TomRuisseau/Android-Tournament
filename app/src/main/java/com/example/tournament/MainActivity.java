@@ -18,6 +18,7 @@ import com.example.tournament.executors.RetrieveShowsExecutor;
 import com.example.tournament.interfaces.CandidatesFetchedCallback;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
@@ -205,9 +206,9 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
         //add to database
         FirebaseUser currentUser = mAuth.getCurrentUser();
         // Store winners info
-        Map<String, Object> userData = new HashMap<>();
-        userData.put(choice + "_name", winner.getName());
-        userData.put(choice + "_image", winner.getImageUrl());
+        Map<String, Object> favoriteData = new HashMap<>();
+        favoriteData.put(choice + "_name", winner.getName());
+        favoriteData.put(choice + "_image", winner.getImageUrl());
 
         assert currentUser != null;
         String userId = currentUser.getUid();
@@ -217,24 +218,31 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful() && task.getResult().exists()) {
                         // Document exists, update specific fields
-                        db.collection("users").document(userId).update(userData);
+                        db.collection("users").document(userId).update(favoriteData);
                     } else {
                         // Document does not exist, create a new document
-                        db.collection("users").document(userId).set(userData);
+                        db.collection("users").document(userId).set(favoriteData);
                     }
                 });
 
-        //TODO : create states for each candidate and save them in the database
-//        db.collection(choice).document(winner.getName()).get()
-//                .addOnCompleteListener(task -> {
-//                    if (task.isSuccessful() && task.getResult().exists()) {
-//                        // Document exists, update specific fields
-//                        db.collection(choice).document(winner.getName()).update(winnerData);
-//                    } else {
-//                        // Document does not exist, create a new document
-//                        db.collection(choice).document(winner.getName()).set(winnerData);
-//                    }
-//                });
+
+        // Store winners info in the games/movies/shows collection
+        Map<String, Object> winnerData = new HashMap<>();
+        winnerData.put("name", winner.getName());
+        winnerData.put("image", winner.getImageUrl());
+        String collectionName = choice.toLowerCase() + "s";
+        db.collection(collectionName).document(winner.getName()).get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && task.getResult().exists()) {
+                        // Document exists, update specific fields
+                        db.collection(collectionName).document(winner.getName()).update(winnerData);
+                        db.collection(collectionName).document(winner.getName()).update("count", FieldValue.increment(1));
+                    } else {
+                        // Document does not exist, create a new document
+                        winnerData.put("count", 1);
+                        db.collection(collectionName).document(winner.getName()).set(winnerData);
+                    }
+                });
     }
 
     private void GoToMenu() {
