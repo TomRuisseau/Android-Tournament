@@ -197,13 +197,25 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
 
         //add to database
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        // Create a new user with a first and last name
+        // Store winners info
         Map<String, Object> userData = new HashMap<>();
         userData.put(choice + "_name", candidates.get(0).getName());
         userData.put(choice + "_image", candidates.get(0).getImageUrl());
 
+        assert currentUser != null;
+        String userId = currentUser.getUid();
         // Add a new document with a generated ID
-        db.collection("users").document(currentUser.getUid()).update(userData);
+        // Check if the document exists before updating
+        db.collection("users").document(userId).get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && task.getResult().exists()) {
+                        // Document exists, update specific fields
+                        db.collection("users").document(userId).update(userData);
+                    } else {
+                        // Document does not exist, create a new document
+                        db.collection("users").document(userId).set(userData);
+                    }
+                });
     }
 
     private void GoToMenu() {
