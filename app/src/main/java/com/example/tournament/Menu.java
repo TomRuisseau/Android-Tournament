@@ -15,12 +15,14 @@ public class Menu extends AppCompatActivity {
 
     FirebaseAuth auth;
     Button logoutBtn;
-    TextView textView;
     FirebaseUser user;
 
     Button showBtn;
     Button movieBtn;
     Button gameBtn;
+
+    Button favoritesBtn;
+    Button candidatesBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,20 +33,18 @@ public class Menu extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         logoutBtn = findViewById(R.id.logout);
-        textView = findViewById(R.id.choiceText);
         user = auth.getCurrentUser();
         showBtn = findViewById(R.id.btn_show);
         movieBtn = findViewById(R.id.btn_movie);
         gameBtn = findViewById(R.id.btn_game);
+        favoritesBtn = findViewById(R.id.btn_favorites);
+        candidatesBtn = findViewById(R.id.btn_candidates);
 
         //if no user connected, go back to login activity
         if(user == null){
             Intent intent= new Intent(getApplicationContext(), Login.class);
             startActivity(intent);
             finish();
-        }
-        else{
-            textView.setText(user.getEmail());
         }
 
         logoutBtn.setOnClickListener(new View.OnClickListener() {
@@ -75,6 +75,22 @@ public class Menu extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 chooseActivity("Game");
+            }
+        });
+
+        favoritesBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent= new Intent(getApplicationContext(), Favorites.class);
+                startActivity(intent);
+            }
+        });
+
+        candidatesBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent= new Intent(getApplicationContext(), Candidates.class);
+                startActivity(intent);
             }
         });
 
