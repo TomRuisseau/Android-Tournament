@@ -3,10 +3,12 @@ package com.example.tournament.dataClasses;
 public class Candidate {
     private String name;
     private String imageUrl;
+    private String type;
 
-    public Candidate(String name, String imageUrl) {
+    public Candidate(String name, String imageUrl, String type) {
         this.name = name;
         this.imageUrl = imageUrl;
+        this.type = type;
     }
 
     public String getName() {
@@ -24,5 +26,14 @@ public class Candidate {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
 
 }

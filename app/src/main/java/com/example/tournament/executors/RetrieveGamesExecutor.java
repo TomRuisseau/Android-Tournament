@@ -58,7 +58,7 @@ public class RetrieveGamesExecutor {
                     JSONObject gameObject = resultsArray.getJSONObject(i);
                     String gameName = gameObject.getString("name");
                     String background_image = gameObject.getString("background_image");
-                    Candidate game = new Candidate(gameName, background_image);
+                    Candidate game = new Candidate(gameName, background_image, "Game");
                     games.add(game);
                 }
 

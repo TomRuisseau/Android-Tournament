@@ -63,7 +63,7 @@ public class RetrieveShowsExecutor {
                         String showName = showObject.getString("name");
                         String poster_path = showObject.getString("poster_path");
                         poster_path = "https://image.tmdb.org/t/p/original" + poster_path;
-                        Candidate show = new Candidate(showName, poster_path);
+                        Candidate show = new Candidate(showName, poster_path, "show");
                         shows.add(show);
 
                         // Check if we have collected enough items

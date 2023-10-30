@@ -63,7 +63,7 @@ public class RetrieveMoviesExecutor {
                         String movieName = movieObject.getString("title");
                         String poster_path = movieObject.getString("poster_path");
                         poster_path = "https://image.tmdb.org/t/p/original" + poster_path;
-                        Candidate movie = new Candidate(movieName, poster_path);
+                        Candidate movie = new Candidate(movieName, poster_path, "movie");
                         movies.add(movie);
 
                         // Check if we have collected enough items
