@@ -6,8 +6,13 @@
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         app:cardBackgroundColor="#D3A2E8"
         app:cardCornerRadius="20dp"
         app:cardElevation="10dp"
@@ -36,7 +41,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="16dp"
                 android:text="Count :"
                 android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -49,7 +54,7 @@
                 android:id="@+id/imageViewCandidate"
                 android:layout_width="306dp"
                 android:layout_height="170dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

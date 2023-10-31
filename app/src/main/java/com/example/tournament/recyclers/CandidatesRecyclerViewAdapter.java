@@ -39,10 +39,12 @@ public class CandidatesRecyclerViewAdapter extends RecyclerView.Adapter<Candidat
     @Override
     public void onBindViewHolder(@NonNull CandidatesRecyclerViewAdapter.MyViewHolder holder, int position) {
         // This is where the data is set based on the position
-        holder.textViewNameCandidate.setText(candidates.get(position).getName());
-        holder.textViewCountCandidate.setText(String.valueOf(candidates.get(position).getCount()));
-        String url = candidates.get(position).getImageUrl();
-        String type = candidates.get(position).getType();
+        Candidate candidate = candidates.get(position);
+        holder.textViewNameCandidate.setText(candidate.getName());
+        String countText = "It has been elected has favorite " + candidate.getCount() + (candidate.getCount() == 1 ? " time." : " times.");
+        holder.textViewCountCandidate.setText(countText);
+        String url = candidate.getImageUrl();
+        String type = candidate.getType();
         switch (type){
             case "movies":
             case "tv shows":
