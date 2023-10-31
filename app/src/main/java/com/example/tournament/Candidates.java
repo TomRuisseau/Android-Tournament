@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.Switch;
 
 import com.example.tournament.dataClasses.Candidate;
@@ -27,8 +28,11 @@ public class Candidates extends AppCompatActivity implements TypeFetchedCallback
 
     RecyclerView candidatesRecyclerView;
 
+    Button btnCandidatesGames, btnCandidatesMovies, btnCandidatesShows;
+
     CandidatesRecyclerViewAdapter candidatesRecyclerViewAdapter;
     int countTypeFetched = 0;
+    String type;
     RetrieveCandidatesExecutor retrieveCandidatesExecutor;
 
     @Override
@@ -36,17 +40,29 @@ public class Candidates extends AppCompatActivity implements TypeFetchedCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_candidates);
 
+        //Initialize the lists
         games = new ArrayList<>();
         movies = new ArrayList<>();
         shows = new ArrayList<>();
         current = new ArrayList<>();
 
+        //Retrieve the views and buttons
         candidatesRecyclerView = findViewById(R.id.candidatesRecyclerView);
+        btnCandidatesGames = findViewById(R.id.btnCandidatesGames);
+        btnCandidatesMovies = findViewById(R.id.btnCandidatesMovies);
+        btnCandidatesShows = findViewById(R.id.btnCandidatesShows);
+
+        //Set the buttons listeners
+        btnCandidatesGames.setOnClickListener(v -> setGamesRecyclerView());
+        btnCandidatesMovies.setOnClickListener(v -> setMoviesRecyclerView());
+        btnCandidatesShows.setOnClickListener(v -> setShowsRecyclerView());
+
+        //Setup the recycler view (empty at first)
         candidatesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         candidatesRecyclerViewAdapter = new CandidatesRecyclerViewAdapter(this, current);
         candidatesRecyclerView.setAdapter(candidatesRecyclerViewAdapter);
 
-
+        //Retrieve all the candidates
         retrieveCandidatesExecutor = new RetrieveCandidatesExecutor();
         retrieveCandidatesExecutor.getCandidates(this, "games");
         retrieveCandidatesExecutor.getCandidates(this, "movies");
@@ -54,13 +70,31 @@ public class Candidates extends AppCompatActivity implements TypeFetchedCallback
     }
 
     private void setGamesRecyclerView(){
-        //TODO : use only one adapter and change the list
-        current.clear();
-        current.addAll(games);
-        for (Candidate candidate : games){
-            Log.d("Set", candidate.getImageUrl());
+        if (type != "games"){
+            type = "games";
+            current.clear();
+            current.addAll(games);
+            candidatesRecyclerViewAdapter.notifyDataSetChanged();
         }
-        candidatesRecyclerViewAdapter.notifyDataSetChanged();
+
+    }
+
+    private void setMoviesRecyclerView(){
+        if (type != "movies"){
+            type = "movies";
+            current.clear();
+            current.addAll(movies);
+            candidatesRecyclerViewAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private void setShowsRecyclerView(){
+        if (type != "tv shows"){
+            type = "tv shows";
+            current.clear();
+            current.addAll(shows);
+            candidatesRecyclerViewAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -79,7 +113,6 @@ public class Candidates extends AppCompatActivity implements TypeFetchedCallback
         }
         if(countTypeFetched == 3){
             retrieveCandidatesExecutor.shutdown();
-            setGamesRecyclerView();
         }
     }
 
