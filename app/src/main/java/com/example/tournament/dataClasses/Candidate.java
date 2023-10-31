@@ -4,11 +4,13 @@ public class Candidate {
     private String name;
     private String imageUrl;
     private String type;
+    private int count;
 
     public Candidate(String name, String imageUrl, String type) {
         this.name = name;
         this.imageUrl = imageUrl;
         this.type = type;
+        this.count = 0;
     }
 
     public String getName() {
@@ -36,4 +38,11 @@ public class Candidate {
     }
 
 
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
 }

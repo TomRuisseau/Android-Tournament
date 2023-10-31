@@ -38,7 +38,7 @@ public class RetrieveFavoritesExecutor {
         this.db = FirebaseFirestore.getInstance();
     }
 
-    public  void getFavorites(CandidatesFetchedCallback callback){
+    public void getFavorites(CandidatesFetchedCallback callback){
         mExecutorService.execute(() -> {
             try {
                 // Get a reference to the users collection.

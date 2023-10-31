@@ -93,7 +93,6 @@ public class Menu extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 
     private void chooseActivity(String activity){
