@@ -19,6 +19,7 @@ public class Candidates extends AppCompatActivity implements TypeFetchedCallback
     List <Candidate> movies;
     List <Candidate> shows;
 
+    int countTypeFetched = 0;
     RetrieveCandidatesExecutor retrieveCandidatesExecutor;
 
     @Override
@@ -35,11 +36,10 @@ public class Candidates extends AppCompatActivity implements TypeFetchedCallback
         retrieveCandidatesExecutor.getCandidates(this, "tv shows");
     }
 
-
-
-
     @Override
     public void onCandidatesFetched(List<Candidate> candidates, String type) {
+        countTypeFetched++;
+        System.out.println("countTypeFetched: " + countTypeFetched);
         switch (type){
             case "games":
                 games = candidates;
@@ -51,5 +51,9 @@ public class Candidates extends AppCompatActivity implements TypeFetchedCallback
                 shows = candidates;
                 break;
         }
+        if(countTypeFetched == 3){
+            retrieveCandidatesExecutor.shutdown();
+        }
     }
+
 }
