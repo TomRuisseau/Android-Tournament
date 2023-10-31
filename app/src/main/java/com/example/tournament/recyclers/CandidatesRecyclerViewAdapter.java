@@ -41,7 +41,7 @@ public class CandidatesRecyclerViewAdapter extends RecyclerView.Adapter<Candidat
         // This is where the data is set based on the position
         Candidate candidate = candidates.get(position);
         holder.textViewNameCandidate.setText(candidate.getName());
-        String countText = "It has been elected has favorite " + candidate.getCount() + (candidate.getCount() == 1 ? " time." : " times.");
+        String countText = "It has been elected has favorite " + (candidate.getCount() == 1 ? "once." : candidate.getCount() + " times.");
         holder.textViewCountCandidate.setText(countText);
         String url = candidate.getImageUrl();
         String type = candidate.getType();

@@ -14,6 +14,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -37,6 +39,8 @@ public class RetrieveCandidatesExecutor {
         this.db = FirebaseFirestore.getInstance();
     }
 
+
+
     public void getCandidates(TypeFetchedCallback callback, String type){
         mExecutorService.execute(() -> {
             try {
@@ -57,11 +61,22 @@ public class RetrieveCandidatesExecutor {
                         candidate.setCount(candidateCount);
                         candidates.add(candidate);
                     }
+                    orderCandidatesByCount();
                     callback.onCandidatesFetched(candidates, type);
                     candidates.clear();
                 });
             } catch (Exception e) {
+
                 e.printStackTrace();
+            }
+        });
+    }
+
+    private void orderCandidatesByCount() {
+        Collections.sort(candidates, new Comparator<Candidate>() {
+            @Override
+            public int compare(Candidate c1, Candidate c2) {
+                return c2.getCount() - c1.getCount();
             }
         });
     }
