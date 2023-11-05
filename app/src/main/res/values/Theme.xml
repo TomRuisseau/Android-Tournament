@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base application theme. -->
+    <style name="Theme.Tournament" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/green</item>
+        <item name="colorPrimaryVariant">@color/darkGreen</item>
+        <item name="colorOnPrimary">@color/white</item>
+
+        <!-- Status bar color. -->*
+        <item name="android:navigationBarColor">?attr/colorPrimaryVariant</item>
+
+        <item name="android:windowBackground">@color/green</item>
+
+
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+    </style>
+
+
+    <style name="ButtonOrange">
+        <item name="android:background">@color/orange</item>
+    </style>
+
+    <style name="TxtInput">
+        <item name="android:background">?attr/colorPrimaryVariant</item>
+    </style>
+
+</resources>
