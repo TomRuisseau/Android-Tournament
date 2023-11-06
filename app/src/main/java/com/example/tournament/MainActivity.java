@@ -194,7 +194,7 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
         Candidate winner = candidates.get(0);
         textViewTop.setText(winner.getName());
         insertImage(position.TOP, winner.getImageUrl());
-        String favorite = "Your favorite " + choice + " is";
+        String favorite = "Here is your favorite " + choice + " !";
         textViewRound.setText(favorite);
         textViewBottom.setVisibility(TextView.INVISIBLE);
         imageViewBottom.setVisibility(ImageView.INVISIBLE);

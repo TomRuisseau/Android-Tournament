@@ -8,16 +8,16 @@
     <string name="click_to_login">Click to login</string>
     <string name="click_to_register">Click to register</string>
     <string name="logout">Logout</string>
-    <string name="movie">Movie</string>
+    <string name="movie">Movies</string>
     <string name="movieDes">you choose between 32 most popular movies </string>
-    <string name="game">Game</string>
+    <string name="game">Games</string>
     <string name="gameDes">you choose between 32 most popular games </string>
     <string name="round_of">"Round of "</string>
     <string name="tv_shows">TV shows</string>
     <string name="tvDes">you choose between 32 most popular tv shows </string>
     <string name="yet_to_be_determined">Yet to be determined</string>
-    <string name="your_favorite_show_is">Here is your favorite show !</string>
-    <string name="your_favorite_game_is">Here is your favorite game !</string>
-    <string name="your_favorite_movie_is">Here is your favorite movie !</string>
+    <string name="your_favorite_show_is">Your favorite TV Show is :</string>
+    <string name="your_favorite_game_is">Your favorite Game is :</string>
+    <string name="your_favorite_movie_is">Your favorite Movie is :</string>
     <string name="Return">&lt;</string>
 </resources>
