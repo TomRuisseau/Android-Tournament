@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.tournament.dataClasses.Candidate;
@@ -26,6 +27,8 @@ public class Favorites extends AppCompatActivity implements FavoritesFetchedCall
 
     Button buttonChoicesFavorite;
 
+    ProgressBar progressBarFavorites;
+
     RetrieveFavoritesExecutor retrieveFavoritesExecutor = new RetrieveFavoritesExecutor();
 
     @Override
@@ -41,6 +44,7 @@ public class Favorites extends AppCompatActivity implements FavoritesFetchedCall
         imageViewMovie = findViewById(R.id.imageViewMovie);
         imageViewGame = findViewById(R.id.imageViewGame);
         buttonChoicesFavorite = findViewById(R.id.buttonChoicesFavorite);
+        progressBarFavorites = findViewById(R.id.progressBarFavorites);
 
         buttonChoicesFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +63,7 @@ public class Favorites extends AppCompatActivity implements FavoritesFetchedCall
         Candidate game = favorites.get(0);
         Candidate movie = favorites.get(1);
         Candidate show = favorites.get(2);
+        progressBarFavorites.setVisibility(View.GONE);
 
         int posterSizeX = 1800;
         int posterSizeY = 2800;

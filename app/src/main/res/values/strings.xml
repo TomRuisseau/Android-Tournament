@@ -16,8 +16,8 @@
     <string name="tv_shows">TV shows</string>
     <string name="tvDes">you choose between 32 most popular tv shows </string>
     <string name="yet_to_be_determined">Yet to be determined</string>
-    <string name="your_favorite_show_is">Your favorite TV Show is :</string>
-    <string name="your_favorite_game_is">Your favorite Game is :</string>
-    <string name="your_favorite_movie_is">Your favorite Movie is :</string>
+    <string name="your_favorite_show_is">Your favorite TV show is :</string>
+    <string name="your_favorite_game_is">Your favorite game is :</string>
+    <string name="your_favorite_movie_is">Your favorite movie is :</string>
     <string name="Return">&lt;</string>
 </resources>
