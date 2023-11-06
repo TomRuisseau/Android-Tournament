@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
 
     TextView textViewRound, textViewClickOn;
 
+    ProgressBar progressBarImage2;
+
     enum position {
         TOP,
         BOTTOM
@@ -69,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
         textViewBottom = findViewById(R.id.textViewBottom);
         textViewRound = findViewById(R.id.textViewRound);
         textViewClickOn = findViewById(R.id.textViewClickOn);
+        progressBarImage2 = findViewById(R.id.progressBarImage2);
         mAuth = FirebaseAuth.getInstance();
 
         //TODO: make these invisible from xml not here
@@ -201,6 +204,7 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
         textViewBottom.setVisibility(TextView.INVISIBLE);
         imageViewBottom.setVisibility(ImageView.INVISIBLE);
         textViewClickOn.setVisibility(TextView.INVISIBLE);
+        progressBarImage2.setVisibility(ProgressBar.INVISIBLE);
 
 
         //add to database
