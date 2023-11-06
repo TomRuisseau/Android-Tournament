@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
 
     TextView textViewTop, textViewBottom;
 
-    TextView textViewRound;
+    TextView textViewRound, textViewClickOn;
 
     enum position {
         TOP,
@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
         textViewTop = findViewById(R.id.textViewTop);
         textViewBottom = findViewById(R.id.textViewBottom);
         textViewRound = findViewById(R.id.textViewRound);
+        textViewClickOn = findViewById(R.id.textViewClickOn);
         mAuth = FirebaseAuth.getInstance();
 
         //TODO: make these invisible from xml not here
@@ -76,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
         textViewTop.setVisibility(TextView.INVISIBLE);
         textViewBottom.setVisibility(TextView.INVISIBLE);
         textViewRound.setVisibility(TextView.INVISIBLE);
+
 
         imageViewBottom.setOnClickListener(this::ClickCandidate);
         imageViewTop.setOnClickListener(this::ClickCandidate);
@@ -198,6 +200,7 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
         textViewRound.setText(favorite);
         textViewBottom.setVisibility(TextView.INVISIBLE);
         imageViewBottom.setVisibility(ImageView.INVISIBLE);
+        textViewClickOn.setVisibility(TextView.INVISIBLE);
 
 
         //add to database
