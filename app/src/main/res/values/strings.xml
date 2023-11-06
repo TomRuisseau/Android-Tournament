@@ -2,13 +2,12 @@
     <string name="app_name">Tournament</string>
     <string name="login">Login</string>
     <string name="email">Email</string>
-    <string name="password">Password (At least 6 characters)</string>
+    <string name="passwordL">Password</string>
+    <string name="passwordR">Password (At least 6 characters)</string>
     <string name="register">Register</string>
     <string name="click_to_login">Click to login</string>
     <string name="click_to_register">Click to register</string>
     <string name="logout">Logout</string>
-    <string name="dogs">Dogs</string>
-    <string name="dog">Dog</string>
     <string name="movie">Movie</string>
     <string name="game">Game</string>
     <string name="round_of">"Round of "</string>

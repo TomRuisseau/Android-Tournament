@@ -3,11 +3,13 @@
     <!-- Base application theme. -->
     <style name="Theme.Tournament" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/green</item>
+        <item name="colorPrimary">@color/orange</item>
         <item name="colorPrimaryVariant">@color/darkGreen</item>
         <item name="colorOnPrimary">@color/white</item>
 
-        <!-- Status bar color. -->*
+        <item name="colorOnSurface">@color/white</item>
+
+        <!-- Status bar color. -->
         <item name="android:navigationBarColor">?attr/colorPrimaryVariant</item>
 
         <item name="android:windowBackground">@color/green</item>
