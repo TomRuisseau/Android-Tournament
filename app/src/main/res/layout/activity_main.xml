@@ -70,11 +70,12 @@
 
     <Button
         android:id="@+id/buttonChoices"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button.Small"
+        android:layout_width="41dp"
+        android:layout_height="43dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Choices"
+        android:text="@string/Return"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

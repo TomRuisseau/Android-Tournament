@@ -8,4 +8,6 @@
 
     <color name="orange">#E0A667</color>
 
+    <color name="transparent">#00000000</color>
+
 </resources>

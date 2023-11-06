@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Switch;
 
@@ -30,6 +32,8 @@ public class Candidates extends AppCompatActivity implements TypeFetchedCallback
 
     Button btnCandidatesGames, btnCandidatesMovies, btnCandidatesShows;
 
+    Button buttonChoicesCandidates;
+
     CandidatesRecyclerViewAdapter candidatesRecyclerViewAdapter;
     int countTypeFetched = 0;
     String type;
@@ -51,11 +55,20 @@ public class Candidates extends AppCompatActivity implements TypeFetchedCallback
         btnCandidatesGames = findViewById(R.id.btnCandidatesGames);
         btnCandidatesMovies = findViewById(R.id.btnCandidatesMovies);
         btnCandidatesShows = findViewById(R.id.btnCandidatesShows);
+        buttonChoicesCandidates = findViewById(R.id.buttonChoicesCandidates);
 
         //Set the buttons listeners
         btnCandidatesGames.setOnClickListener(v -> setGamesRecyclerView());
         btnCandidatesMovies.setOnClickListener(v -> setMoviesRecyclerView());
         btnCandidatesShows.setOnClickListener(v -> setShowsRecyclerView());
+
+        buttonChoicesCandidates.setOnClickListener((View view) -> {
+                    Intent intent = new Intent(getApplicationContext(), Menu.class);
+                    startActivity(intent);
+                    finish();
+                }
+        );
+
 
         //Setup the recycler view (empty at first)
         candidatesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
