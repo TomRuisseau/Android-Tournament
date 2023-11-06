@@ -18,21 +18,67 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <Button
-        android:id="@+id/btn_show"
+    <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="192dp"
+        android:elevation="20dp"
+        android:text="@string/game"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_game"
+        app:layout_constraintEnd_toEndOf="@+id/btn_game"
+        app:layout_constraintHorizontal_bias="0.06"
+        app:layout_constraintStart_toStartOf="@+id/btn_game"
+        app:layout_constraintTop_toTopOf="@+id/btn_game"
+        app:layout_constraintVertical_bias="0.516" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="20dp"
+        android:text="@string/movie"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_movie"
+        app:layout_constraintEnd_toEndOf="@+id/btn_movie"
+        app:layout_constraintHorizontal_bias="0.056"
+        app:layout_constraintStart_toStartOf="@+id/btn_movie"
+        app:layout_constraintTop_toTopOf="@+id/btn_movie"
+        app:layout_constraintVertical_bias="0.494" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="20dp"
         android:text="@string/tv_shows"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_show"
+        app:layout_constraintEnd_toEndOf="@+id/btn_show"
+        app:layout_constraintHorizontal_bias="0.066"
+        app:layout_constraintStart_toStartOf="@+id/btn_show"
+        app:layout_constraintTop_toTopOf="@+id/btn_show"
+        app:layout_constraintVertical_bias="0.505" />
+
+    <Button
+        android:id="@+id/btn_show"
+        android:layout_width="300dp"
+        android:layout_height="120dp"
+        android:layout_marginBottom="150dp"
+        android:gravity="bottom|left"
+        android:text="@string/tvDes"
+        app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btn_movie"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/movie"
+        android:layout_width="300dp"
+        android:layout_height="120dp"
+        android:gravity="bottom|left"
+        android:text="@string/movieDes"
+        app:cornerRadius="20dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_show"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.507"
@@ -41,10 +87,12 @@
 
     <Button
         android:id="@+id/btn_game"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="192dp"
-        android:text="@string/game"
+        android:layout_width="300dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="150dp"
+        android:gravity="bottom|left"
+        android:text="@string/gameDes"
+        app:cornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -68,4 +116,5 @@
         android:text="All candidates"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
