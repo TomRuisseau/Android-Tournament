@@ -30,6 +30,7 @@
 
     <style name="TxtInput">
         <item name="android:background">?attr/colorPrimaryVariant</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
     </style>
 
 </resources>
