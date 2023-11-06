@@ -29,7 +29,6 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements CandidatesFetchedCallback {
     String choice;
-    TextView choiceText;
     ProgressBar progressBar;
 
     Button buttonChoices;
@@ -86,12 +85,10 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
             GoToMenu();
         });
 
-        choiceText = findViewById(R.id.choiceText);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             choice = extras.getString("choice");
         }
-        choiceText.setText(choice);
         switch (choice) {
             case "TV Show":
                 retrieveShowsExecutor.getShows(this::onCandidatesFetched);
