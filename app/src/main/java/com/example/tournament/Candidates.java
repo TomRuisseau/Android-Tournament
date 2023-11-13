@@ -82,6 +82,7 @@ public class Candidates extends AppCompatActivity implements TypeFetchedCallback
         retrieveCandidatesExecutor.getCandidates(this, "tv shows");
     }
 
+    //Set the recycler view to the games list
     private void setGamesRecyclerView(){
         if (type != "games"){
             type = "games";
@@ -92,6 +93,7 @@ public class Candidates extends AppCompatActivity implements TypeFetchedCallback
 
     }
 
+    //Set the recycler view to the movies list
     private void setMoviesRecyclerView(){
         if (type != "movies"){
             type = "movies";
@@ -101,6 +103,7 @@ public class Candidates extends AppCompatActivity implements TypeFetchedCallback
         }
     }
 
+    //Set the recycler view to the shows list
     private void setShowsRecyclerView(){
         if (type != "tv shows"){
             type = "tv shows";
@@ -110,6 +113,7 @@ public class Candidates extends AppCompatActivity implements TypeFetchedCallback
         }
     }
 
+    //Callback for when the candidates are retrieved
     @Override
     public void onCandidatesFetched(List<Candidate> candidates, String type) {
         countTypeFetched++;

@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
         progressBarImage2 = findViewById(R.id.progressBarImage2);
         mAuth = FirebaseAuth.getInstance();
 
-        //TODO: make these invisible from xml not here
         imageViewTop.setVisibility(ImageView.INVISIBLE);
         imageViewBottom.setVisibility(ImageView.INVISIBLE);
         textViewTop.setVisibility(TextView.INVISIBLE);
@@ -109,9 +108,7 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
     @Override
     public void onCandidatesFetched(List<Candidate> candidates) {
         this.candidates = candidates;
-        for (Candidate candidate : this.candidates) {
-            Log.d("RESULTS", candidate.getName() + " " + candidate.getImageUrl());
-        }
+        //stops all executors
         retrieveGamesExecutor.shutdown();
         retrieveMoviesExecutor.shutdown();
         retrieveShowsExecutor.shutdown();
@@ -119,32 +116,45 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
         startTournament();
     }
 
+    //initialize the tournament with the first round
     private void startTournament() {
+        //display the images and names
         imageViewTop.setVisibility(ImageView.VISIBLE);
         imageViewBottom.setVisibility(ImageView.VISIBLE);
         textViewTop.setVisibility(TextView.VISIBLE);
         textViewBottom.setVisibility(TextView.VISIBLE);
         textViewRound.setVisibility(TextView.VISIBLE);
 
+        //add all candidates to the next round and start the tournament
         nextCandidates.addAll(candidates);
         NextRound();
     }
 
+    //start the next round
     private void NextRound() {
+        //keep only the winners of the previous round
         candidates.clear();
         candidates.addAll(nextCandidates);
         nextCandidates.clear();
+
+        //display the round number
         String text = getString(R.string.round_of) + candidates.size();
         textViewRound.setText(text);
+
+        //reset the currentId
         currentId = -1; //because we increment it at the beginning of NextDuel()
 
+        //if we only have one candidate left, we have a winner
         if (candidates.size() == 1) {
             declareWinner();
             return;
         }
+
+        //if not, we start the next duel
         NextDuel();
     }
 
+    //start the next duel
     private void NextDuel(){
         int candidateCount = candidates.size();
 
@@ -162,6 +172,7 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
         insertImage(position.BOTTOM, candidates.get(candidateCount - 1 - currentId).getImageUrl());
     }
 
+    //when the user clicks on a candidate to choose it
     private void ClickCandidate(View view) {
         if (view.getId() == R.id.imageViewTop){
             nextCandidates.add(candidates.get(currentId));
@@ -172,6 +183,7 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
         NextDuel();
     }
 
+    //insert an image in the imageview depending on the position and with the right size
     private void insertImage(position pos, String url) {
         switch (choice){
             case "Movie":
@@ -194,11 +206,14 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
         }
     }
 
+    //when we have a winner
     private void declareWinner() {
         imageViewTop.setOnClickListener(null); //disable click listeners
         Candidate winner = candidates.get(0);
         textViewTop.setText(winner.getName());
         insertImage(position.TOP, winner.getImageUrl());
+
+        //display the winner and hide the other views
         String favorite = "Here is your favorite " + choice + " !";
         textViewRound.setText(favorite);
         textViewBottom.setVisibility(TextView.INVISIBLE);
@@ -249,6 +264,7 @@ public class MainActivity extends AppCompatActivity implements CandidatesFetched
                 });
     }
 
+    //go back to the menu
     private void GoToMenu() {
         Intent intent = new Intent(getApplicationContext(), Menu.class);
         startActivity(intent);

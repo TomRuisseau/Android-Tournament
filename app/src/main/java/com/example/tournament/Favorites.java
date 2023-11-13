@@ -58,6 +58,7 @@ public class Favorites extends AppCompatActivity implements FavoritesFetchedCall
         retrieveFavoritesExecutor.getFavorites(this::onFavoritesFetched);
     }
 
+    //callBack for the retrieveFavoritesExecutor
     @Override
     public void onFavoritesFetched(List<Candidate> favorites) {
         Candidate game = favorites.get(0);
@@ -68,7 +69,7 @@ public class Favorites extends AppCompatActivity implements FavoritesFetchedCall
         int posterSizeX = 1800;
         int posterSizeY = 2800;
 
-
+        //display favorite game
         if (game.getName() != null) {
             textViewGame.setText(game.getName());
             Picasso.get()
@@ -80,6 +81,7 @@ public class Favorites extends AppCompatActivity implements FavoritesFetchedCall
         else{
             textViewGame.setText(R.string.yet_to_be_determined);
         }
+        //display favorite movie
         if (movie.getName() != null) {
             textViewMovie.setText(movie.getName());
             Picasso.get()
@@ -91,6 +93,7 @@ public class Favorites extends AppCompatActivity implements FavoritesFetchedCall
         else{
             textViewMovie.setText(R.string.yet_to_be_determined);
         }
+        //display favorite show
         if (show.getName() != null) {
             textViewShow.setText(show.getName());
             Picasso.get()

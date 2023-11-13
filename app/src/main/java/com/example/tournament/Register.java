@@ -51,7 +51,6 @@ public class Register extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         textView = findViewById(R.id.loginNow);
 
-        //Adding a click Listener on the button
         buttonReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,6 +69,8 @@ public class Register extends AppCompatActivity {
                 }
 
                 progressBar.setVisibility(View.VISIBLE);
+
+                //Create the user
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override

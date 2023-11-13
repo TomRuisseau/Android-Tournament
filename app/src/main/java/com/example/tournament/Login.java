@@ -51,7 +51,6 @@ public class Login extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         textView = findViewById(R.id.registerNow);
 
-        //Adding a click Listener on the button
         buttonLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
